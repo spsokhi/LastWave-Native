@@ -5,6 +5,10 @@ enum InnerTubeError: LocalizedError {
     case unplayable(String)
     case noAudio
     case badResponse
+    /// The stream URL itself was refused (probe status, nil = network error).
+    case mediaRejected(Int?)
+    /// Every player client failed; one "CLIENT: reason" entry each.
+    case allClientsFailed([String])
 
     var errorDescription: String? {
         switch self {
@@ -12,6 +16,8 @@ enum InnerTubeError: LocalizedError {
         case .unplayable(let reason): return reason
         case .noAudio: return "No playable audio stream was found for this song"
         case .badResponse: return "Unexpected response from YouTube Music"
+        case .mediaRejected(let status): return status.map { "audio server answered HTTP \($0)" } ?? "audio server unreachable"
+        case .allClientsFailed(let reasons): return reasons.joined(separator: "; ")
         }
     }
 }
@@ -110,7 +116,10 @@ actor InnerTube {
             fetched = WebConfig(
                 apiKey: Self.findConfig(html, "INNERTUBE_API_KEY") ?? Self.fallbackKey,
                 clientVersion: Self.findConfig(html, "INNERTUBE_CONTEXT_CLIENT_VERSION") ?? Self.fallbackVersion,
-                visitorData: Self.findConfig(html, "VISITOR_DATA") ?? Self.findConfig(html, "EOM_VISITOR_DATA")
+                // music.youtube.com currently embeds it as INNERTUBE_CONTEXT.client.visitorData.
+                visitorData: Self.findConfig(html, "VISITOR_DATA")
+                    ?? Self.findConfig(html, "visitorData")
+                    ?? Self.findConfig(html, "EOM_VISITOR_DATA")
             )
         }
         config = fetched
@@ -221,7 +230,7 @@ actor InnerTube {
             clients.insert(clients.remove(at: index), at: 0)
         }
 
-        var lastError: Error = InnerTubeError.noAudio
+        var failures: [String] = []
         for client in clients {
             do {
                 let stream = try await resolve(videoId, client: client, visitorData: config.visitorData)
@@ -233,12 +242,12 @@ actor InnerTube {
                 if Self.unavailableReasons.contains(where: { lower.contains($0) }) {
                     throw InnerTubeError.unplayable(reason)
                 }
-                lastError = InnerTubeError.unplayable(reason)
+                failures.append("\(client.name): \(reason)")
             } catch {
-                lastError = error
+                failures.append("\(client.name): \(error.localizedDescription)")
             }
         }
-        throw lastError
+        throw InnerTubeError.allClientsFailed(failures)
     }
 
     private func resolve(_ videoId: String, client: PlayerClient, visitorData: String?) async throws -> AudioStream {
@@ -290,13 +299,35 @@ actor InnerTube {
                     return (lhs.int("bitrate") ?? 0) > (rhs.int("bitrate") ?? 0)
                 }
             if let best = audio.first, let raw = best.str("url"), let url = URL(string: raw) {
-                return AudioStream(url: url, headers: mediaHeaders, expiresAt: Self.expiry(of: url) ?? responseExpiry, clientName: client.name)
+                // Check the URL is actually served before AVPlayer gets it, so a
+                // refused stream falls through to the next option with a clear reason.
+                let length = best.str("contentLength").flatMap { Int($0) }
+                let status = await probe(url, headers: mediaHeaders, range: length.map { "bytes=0-\($0 - 1)" } ?? "bytes=0-")
+                if status == 200 || status == 206 {
+                    return AudioStream(url: url, headers: mediaHeaders, expiresAt: Self.expiry(of: url) ?? responseExpiry, clientName: client.name)
+                }
+                if streaming.str("hlsManifestUrl") == nil { throw InnerTubeError.mediaRejected(status) }
             }
         }
         if let hls = streaming.str("hlsManifestUrl"), let url = URL(string: hls) {
+            let status = await probe(url, headers: mediaHeaders, range: nil)
+            guard status == 200 || status == 206 else { throw InnerTubeError.mediaRejected(status) }
             return AudioStream(url: url, headers: mediaHeaders, expiresAt: responseExpiry, clientName: client.name)
         }
         throw InnerTubeError.noAudio
+    }
+
+    /// Requests `range` the way AVPlayer will (the whole file in one range) and
+    /// returns the HTTP status from the response headers without downloading
+    /// the body. ANDROID_VR URLs, for example, serve small ranges but answer a
+    /// whole-file range with 403, which AVPlayer reports only as "Cannot Open".
+    private func probe(_ url: URL, headers: [String: String], range: String?) async -> Int? {
+        var request = URLRequest(url: url, timeoutInterval: 6)
+        for (name, value) in headers { request.setValue(value, forHTTPHeaderField: name) }
+        if let range { request.setValue(range, forHTTPHeaderField: "Range") }
+        guard let result = try? await session.bytes(for: request) else { return nil }
+        result.0.task.cancel()
+        return (result.1 as? HTTPURLResponse)?.statusCode
     }
 
     private static func expiry(of url: URL) -> Date? {

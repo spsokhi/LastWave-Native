@@ -36,7 +36,7 @@ final class LastWaveSmokeTests: XCTestCase {
         let miniError = app.staticTexts["mini-error"]
         if miniError.exists {
             note("mini-error: \(miniError.label)")
-            if miniError.label.lowercased().contains("bot") { blockedReason = miniError.label }
+            if Self.isNetworkBlock(miniError.label) { blockedReason = miniError.label }
         }
 
         miniTitle.tap()
@@ -49,7 +49,7 @@ final class LastWaveSmokeTests: XCTestCase {
                 progressed = true
                 break
             }
-            if playerError.exists, playerError.label.lowercased().contains("bot") {
+            if playerError.exists, Self.isNetworkBlock(playerError.label) {
                 blockedReason = playerError.label
             }
             sleep(1)
@@ -70,6 +70,14 @@ final class LastWaveSmokeTests: XCTestCase {
         app.buttons["Up next"].tap()
         sleep(3)
         snap(app, "06-queue")
+    }
+
+    /// Bot checks and refused audio URLs are how YouTube treats data-center
+    /// IPs; ci/probe_stream.py confirms the same block outside the app.
+    /// AVPlayer errors such as "Cannot Open" are NOT treated as a block.
+    private static func isNetworkBlock(_ message: String) -> Bool {
+        let lower = message.lowercased()
+        return lower.contains("bot") || lower.contains("http 403")
     }
 
     private func snap(_ app: XCUIApplication, _ name: String) {

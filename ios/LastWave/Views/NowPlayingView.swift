@@ -106,15 +106,19 @@ struct NowPlayingView: View {
                 Text(formatTime(scrubPosition ?? player.currentTime))
                     .accessibilityIdentifier("elapsed-time")
                 Spacer()
-                if let error = player.errorMessage {
-                    Text(error).foregroundStyle(.red).lineLimit(1)
-                        .accessibilityIdentifier("player-error")
-                }
-                Spacer()
                 Text(formatTime(player.duration))
             }
             .font(.caption.monospacedDigit())
             .foregroundStyle(.secondary)
+            if let error = player.errorMessage {
+                Text(error)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(4)
+                    .textSelection(.enabled)
+                    .accessibilityIdentifier("player-error")
+            }
         }
     }
 

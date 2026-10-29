@@ -231,7 +231,7 @@ final class PlayerManager: ObservableObject {
         let item = AVPlayerItem(asset: asset)
         itemStatusObservation = item.observe(\.status, options: [.new]) { [weak self] item, _ in
             let status = item.status
-            let message = item.error?.localizedDescription
+            let message = item.status == .failed ? playbackErrorDescription(item) : nil
             Task { @MainActor in self?.itemStatusChanged(status, message: message, track: track) }
         }
         player.replaceCurrentItem(with: item)
@@ -271,6 +271,7 @@ final class PlayerManager: ObservableObject {
         isLoading = false
         isPlaying = false
         consecutiveFailures += 1
+        player.pause()
         errorMessage = "Couldn't play “\(track.title)”: \(error.localizedDescription)"
         if consecutiveFailures >= Self.maxConsecutiveFailures {
             errorMessage = "\(consecutiveFailures) songs in a row failed: \(error.localizedDescription)"
@@ -495,4 +496,19 @@ final class PlayerManager: ObservableObject {
         if let artwork { info[MPMediaItemPropertyArtwork] = artwork }
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
     }
+}
+
+/// AVFoundation's own text is often just "Cannot Open"; append the error
+/// codes and the last HTTP status AVPlayer logged so failures are diagnosable.
+func playbackErrorDescription(_ item: AVPlayerItem) -> String {
+    guard let error = item.error as NSError? else { return "Playback failed" }
+    var parts = ["\(error.domain) \(error.code)"]
+    if let underlying = error.userInfo[NSUnderlyingErrorKey] as? NSError {
+        parts.append("\(underlying.domain) \(underlying.code)")
+    }
+    if let event = item.errorLog()?.events.last {
+        parts.append("HTTP \(event.errorStatusCode)")
+        if let comment = event.errorComment { parts.append(comment) }
+    }
+    return "\(error.localizedDescription) (\(parts.joined(separator: ", ")))"
 }

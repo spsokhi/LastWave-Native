@@ -92,6 +92,12 @@ jobs:
           echo "Using simulator $UDID"
           echo "SIM_UDID=$UDID" >> "$GITHUB_ENV"
 
+      - name: Probe YouTube from this runner
+        continue-on-error: true
+        run: |
+          mkdir -p ios/results
+          python3 ios/ci/probe_stream.py "Daft Punk Get Lucky" 2>&1 | tee ios/results/probe.txt
+
       - name: Run UI test
         id: uitest
         continue-on-error: true
