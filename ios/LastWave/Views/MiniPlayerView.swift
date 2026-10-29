@@ -12,11 +12,13 @@ struct MiniPlayerView: View {
                         Text(track.title)
                             .font(.subheadline.weight(.semibold))
                             .lineLimit(1)
+                            .accessibilityIdentifier("mini-title")
                         if let error = player.errorMessage {
                             Text(error)
                                 .font(.caption)
                                 .foregroundStyle(.red)
                                 .lineLimit(1)
+                                .accessibilityIdentifier("mini-error")
                         } else {
                             Text(track.artist)
                                 .font(.caption)

@@ -57,3 +57,89 @@ jobs:
           name: LastWave-iOS-unsigned
           path: ios/LastWave-unsigned.ipa
           if-no-files-found: error
+
+  simulator-test:
+    name: Simulator smoke test
+    runs-on: macos-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: ios
+        run: xcodegen generate
+
+      - name: Pick newest iPhone simulator
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+          import json, re, sys
+          devices = json.load(sys.stdin)["devices"]
+          def version(key):
+              return tuple(int(n) for n in re.findall(r"\d+", key.split("iOS")[-1]))
+          for runtime in sorted((k for k in devices if "iOS" in k), key=version, reverse=True):
+              phones = [d for d in devices[runtime] if d["name"].startswith("iPhone")]
+              if phones:
+                  print(phones[0]["udid"])
+                  break
+          ')
+          echo "Using simulator $UDID"
+          echo "SIM_UDID=$UDID" >> "$GITHUB_ENV"
+
+      - name: Run UI test
+        id: uitest
+        continue-on-error: true
+        working-directory: ios
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project LastWave.xcodeproj \
+            -scheme LastWave \
+            -destination "id=$SIM_UDID" \
+            -resultBundlePath TestResults.xcresult \
+            2>&1 | tee test.log | grep -E "error:|Test Case|XCTAssert|\*\* TEST" || true
+          exit ${PIPESTATUS[0]}
+
+      - name: Collect screenshots and logs
+        if: always()
+        working-directory: ios
+        run: |
+          mkdir -p results
+          if [ -d TestResults.xcresult ]; then
+            xcrun xcresulttool export attachments --path TestResults.xcresult --output-path results/attachments || true
+          fi
+          grep -E "error:|Test Case|XCTAssert|\*\* TEST" test.log > results/summary.txt || true
+          tail -n 150 test.log > results/test-log-tail.txt || true
+          echo "test outcome: ${{ steps.uitest.outcome }}" >> results/summary.txt
+          ls -R results
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: LastWave-iOS-simulator-results
+          path: ios/results
+
+      - name: Publish results to ios-test-results branch
+        if: always()
+        working-directory: ios/results
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "$GITHUB_SHA" > commit.txt
+          git init -q -b ios-test-results
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "iOS simulator test results for $GITHUB_SHA"
+          git push -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" ios-test-results
+
+      - name: Fail if the UI test failed
+        if: steps.uitest.outcome == 'failure'
+        run: exit 1

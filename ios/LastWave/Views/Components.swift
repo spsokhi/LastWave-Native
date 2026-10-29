@@ -58,6 +58,7 @@ struct TrackRow: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("track-row")
         .contextMenu {
             Button { player.playNext(track) } label: { Label("Play next", systemImage: "text.insert") }
             Button { player.addToQueue(track) } label: { Label("Add to queue", systemImage: "text.badge.plus") }

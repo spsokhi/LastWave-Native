@@ -101,9 +101,11 @@ struct NowPlayingView: View {
             )
             HStack {
                 Text(formatTime(scrubPosition ?? player.currentTime))
+                    .accessibilityIdentifier("elapsed-time")
                 Spacer()
                 if let error = player.errorMessage {
                     Text(error).foregroundStyle(.red).lineLimit(1)
+                        .accessibilityIdentifier("player-error")
                 }
                 Spacer()
                 Text(formatTime(player.duration))
