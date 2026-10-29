@@ -1,0 +1,150 @@
+    t =    60.43s Find the "player-error" StaticText
+    t =    61.50s Find the "elapsed-time" StaticText
+    t =    61.59s Checking existence of `"player-error" StaticText`
+    t =    61.66s Find the "player-error" StaticText
+    t =    61.75s Find the "player-error" StaticText
+    t =    62.83s Find the "elapsed-time" StaticText
+    t =    62.90s Checking existence of `"player-error" StaticText`
+    t =    62.96s Find the "player-error" StaticText
+    t =    63.03s Find the "player-error" StaticText
+    t =    64.17s Find the "elapsed-time" StaticText
+    t =    64.25s Checking existence of `"player-error" StaticText`
+    t =    64.32s Find the "player-error" StaticText
+    t =    64.39s Find the "player-error" StaticText
+    t =    65.47s Find the "elapsed-time" StaticText
+    t =    65.55s Checking existence of `"player-error" StaticText`
+    t =    65.62s Find the "player-error" StaticText
+    t =    65.68s Find the "player-error" StaticText
+    t =    66.75s Find the "elapsed-time" StaticText
+    t =    66.82s Checking existence of `"player-error" StaticText`
+    t =    66.88s Find the "player-error" StaticText
+    t =    66.96s Find the "player-error" StaticText
+    t =    68.03s Find the "elapsed-time" StaticText
+    t =    68.10s Checking existence of `"player-error" StaticText`
+    t =    68.17s Find the "player-error" StaticText
+    t =    68.24s Find the "player-error" StaticText
+    t =    69.32s Find the "elapsed-time" StaticText
+    t =    69.39s Checking existence of `"player-error" StaticText`
+    t =    69.46s Find the "player-error" StaticText
+    t =    69.54s Find the "player-error" StaticText
+    t =    70.61s Find the "elapsed-time" StaticText
+    t =    70.68s Checking existence of `"player-error" StaticText`
+    t =    70.74s Find the "player-error" StaticText
+    t =    70.81s Find the "player-error" StaticText
+    t =    71.88s Find the "elapsed-time" StaticText
+    t =    71.95s Checking existence of `"player-error" StaticText`
+    t =    72.01s Find the "player-error" StaticText
+    t =    72.08s Find the "player-error" StaticText
+    t =    73.15s Find the "elapsed-time" StaticText
+    t =    73.22s Checking existence of `"player-error" StaticText`
+    t =    73.28s Find the "player-error" StaticText
+    t =    73.35s Find the "player-error" StaticText
+    t =    74.42s Find the "elapsed-time" StaticText
+    t =    74.49s Checking existence of `"player-error" StaticText`
+    t =    74.55s Find the "player-error" StaticText
+    t =    74.62s Find the "player-error" StaticText
+    t =    75.69s Find the "elapsed-time" StaticText
+    t =    75.76s Checking existence of `"player-error" StaticText`
+    t =    75.82s Find the "player-error" StaticText
+    t =    75.88s Find the "player-error" StaticText
+    t =    76.96s Find the "elapsed-time" StaticText
+    t =    77.02s Checking existence of `"player-error" StaticText`
+    t =    77.09s Find the "player-error" StaticText
+    t =    77.16s Find the "player-error" StaticText
+    t =    78.23s Find the "elapsed-time" StaticText
+    t =    78.30s Checking existence of `"player-error" StaticText`
+    t =    78.36s Find the "player-error" StaticText
+    t =    78.44s Find the "player-error" StaticText
+    t =    79.51s Find the "elapsed-time" StaticText
+    t =    79.58s Checking existence of `"player-error" StaticText`
+    t =    79.65s Find the "player-error" StaticText
+    t =    79.71s Find the "player-error" StaticText
+    t =    80.77s Find the "elapsed-time" StaticText
+    t =    80.85s Checking existence of `"player-error" StaticText`
+    t =    80.91s Find the "player-error" StaticText
+    t =    80.98s Find the "player-error" StaticText
+    t =    82.05s Find the "elapsed-time" StaticText
+    t =    82.12s Checking existence of `"player-error" StaticText`
+    t =    82.18s Find the "player-error" StaticText
+    t =    82.31s Find the "player-error" StaticText
+    t =    83.38s Find the "elapsed-time" StaticText
+    t =    83.44s Checking existence of `"player-error" StaticText`
+    t =    83.52s Find the "player-error" StaticText
+    t =    83.59s Find the "player-error" StaticText
+    t =    84.66s Find the "elapsed-time" StaticText
+    t =    84.72s Checking existence of `"player-error" StaticText`
+    t =    84.80s Find the "player-error" StaticText
+    t =    84.86s Find the "player-error" StaticText
+    t =    85.93s Find the "elapsed-time" StaticText
+    t =    85.99s Checking existence of `"player-error" StaticText`
+    t =    86.05s Find the "player-error" StaticText
+    t =    86.12s Find the "player-error" StaticText
+    t =    87.20s Find the "elapsed-time" StaticText
+    t =    87.26s Checking existence of `"player-error" StaticText`
+    t =    87.33s Find the "player-error" StaticText
+    t =    87.40s Find the "player-error" StaticText
+    t =    88.47s Find the "elapsed-time" StaticText
+    t =    88.56s Checking existence of `"player-error" StaticText`
+    t =    88.65s Find the "player-error" StaticText
+    t =    88.73s Find the "player-error" StaticText
+    t =    89.87s Find the "elapsed-time" StaticText
+    t =    89.98s Checking existence of `"player-error" StaticText`
+    t =    90.05s Find the "player-error" StaticText
+    t =    90.16s Find the "player-error" StaticText
+    t =    91.26s Find the "elapsed-time" StaticText
+    t =    91.34s Checking existence of `"player-error" StaticText`
+    t =    91.41s Find the "player-error" StaticText
+    t =    91.50s Find the "player-error" StaticText
+    t =    92.61s Find the "elapsed-time" StaticText
+    t =    92.68s Checking existence of `"player-error" StaticText`
+    t =    92.74s Find the "player-error" StaticText
+    t =    92.80s Find the "player-error" StaticText
+    t =    93.87s Find the "elapsed-time" StaticText
+    t =    93.95s Checking existence of `"player-error" StaticText`
+    t =    94.01s Find the "player-error" StaticText
+    t =    94.07s Find the "player-error" StaticText
+    t =    95.15s Find the "elapsed-time" StaticText
+    t =    95.22s Checking existence of `"player-error" StaticText`
+    t =    95.28s Find the "player-error" StaticText
+    t =    95.36s Find the "player-error" StaticText
+    t =    98.44s Find the Target Application 'com.lastwave.ios'
+    t =    99.30s Added attachment named '04-now-playing'
+    t =    99.30s Find the "elapsed-time" StaticText
+    t =    99.36s Checking existence of `"player-error" StaticText`
+    t =    99.42s Find the "player-error" StaticText
+    t =    99.49s Added attachment named 'diagnostics'
+    t =    99.49s Added attachment named 'diagnostics'
+    t =    99.49s Tap "Lyrics" Button
+    t =    99.49s     Wait for com.lastwave.ios to idle
+    t =    99.50s     Find the "Lyrics" Button
+    t =    99.56s     Check for interrupting elements affecting "Lyrics" Button
+    t =    99.68s     Synthesize event
+    t =   100.01s     Wait for com.lastwave.ios to idle
+    t =   106.03s Find the Target Application 'com.lastwave.ios'
+    t =   106.32s Added attachment named '05-lyrics'
+    t =   106.32s Tap "Up next" Button
+    t =   106.32s     Wait for com.lastwave.ios to idle
+    t =   106.33s     Find the "Up next" Button
+    t =   106.44s     Check for interrupting elements affecting "Up next" Button
+    t =   106.54s     Synthesize event
+    t =   106.90s     Wait for com.lastwave.ios to idle
+    t =   109.98s Find the Target Application 'com.lastwave.ios'
+    t =   110.22s Added attachment named '06-queue'
+    t =   110.23s Tear Down
+Test Case '-[LastWaveUITests.LastWaveSmokeTests testSearchPlayLyricsQueue]' passed (110.825 seconds).
+Test Suite 'LastWaveSmokeTests' passed at 2026-10-29 14:26:59.296.
+	 Executed 1 test, with 0 failures (0 unexpected) in 110.825 (110.828) seconds
+Test Suite 'LastWaveUITests.xctest' passed at 2026-10-29 14:26:59.296.
+	 Executed 1 test, with 0 failures (0 unexpected) in 110.825 (110.828) seconds
+Test Suite 'All tests' passed at 2026-10-29 14:26:59.297.
+	 Executed 1 test, with 0 failures (0 unexpected) in 110.825 (110.829) seconds
+2026-10-29 14:27:02.260 xcodebuild[1382:7476] [MT] IDETestOperationsObserverDebug: 251.548 elapsed -- Testing started completed.
+2026-10-29 14:27:02.260 xcodebuild[1382:7476] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-29 14:27:02.260 xcodebuild[1382:7476] [MT] IDETestOperationsObserverDebug: 251.548 sec, +251.548 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/LastWave-Native/LastWave-Native/ios/TestResults.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

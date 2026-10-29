@@ -1,0 +1,4 @@
+Test Case '-[LastWaveUITests.LastWaveSmokeTests testSearchPlayLyricsQueue]' started.
+Test Case '-[LastWaveUITests.LastWaveSmokeTests testSearchPlayLyricsQueue]' passed (110.825 seconds).
+** TEST SUCCEEDED **
+test outcome: success

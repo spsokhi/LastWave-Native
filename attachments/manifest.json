@@ -1,0 +1,89 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "A712D363-503B-400E-BB0E-55FFB1386EFA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "06-queue_0_E12B2718-F9D1-4BEB-A080-AEE12B899EA9.png",
+        "timestamp" : 1793284018.691
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "256C6840-F195-4CCE-8F17-FA4877E37A1D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "05-lyrics_0_28C2708E-6BD8-4CEC-9D7D-3DFACAE860BC.png",
+        "timestamp" : 1793284014.785
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "58763493-A062-415E-9830-AE0CA07FD656.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "diagnostics_0_AAC408B9-E21F-4904-BDB4-4E4AF20A61D5.txt",
+        "timestamp" : 1793284007.959
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "4E782FAD-90DF-41E5-8848-CBF2EA13FC5D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "diagnostics_0_A0FCD0B5-1322-4A3D-8C8B-4048CE32289E.txt",
+        "timestamp" : 1793284007.959
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "79F545F3-43CE-4FE9-AC1A-D15401FD43DA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "04-now-playing_0_DC1DDF11-0D4A-41B8-99DB-5CE6EB96D2A4.png",
+        "timestamp" : 1793284007.766
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "3196D81A-69A4-4997-8A50-12BD96E3AA9F.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "diagnostics_0_7FD2B0AE-3A18-4C85-9F15-2F611D720BBB.txt",
+        "timestamp" : 1793283955.064
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "365785D5-E62E-4B26-8979-C978CF78189E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "03-mini-player_0_793D466C-8617-4696-95CF-0813BD9AD736.png",
+        "timestamp" : 1793283954.959
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "AE90006E-8BA7-4135-BBD5-1F1CF93CBAF4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "02-search-results_0_59C1D850-1BC2-4D64-9596-4712C627D6D5.png",
+        "timestamp" : 1793283944.63
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "77AA4492-C787-4EEE-A772-05D4B3E9ECCD",
+        "deviceName" : "iPhone 17 Pro",
+        "exportedFileName" : "F1388742-5444-4254-B11E-B91C436619F1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "01-home_0_619A5566-0DE7-4130-80D8-61548B42AA4D.png",
+        "timestamp" : 1793283933.667
+      }
+    ],
+    "testIdentifier" : "LastWaveSmokeTests/testSearchPlayLyricsQueue()",
+    "testIdentifierURL" : "test://com.apple.xcode/LastWave/LastWaveUITests/LastWaveSmokeTests/testSearchPlayLyricsQueue"
+  }
+]
