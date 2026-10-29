@@ -97,14 +97,15 @@ jobs:
         continue-on-error: true
         working-directory: ios
         run: |
-          set -o pipefail
+          set +e
           xcodebuild test \
             -project LastWave.xcodeproj \
             -scheme LastWave \
             -destination "id=$SIM_UDID" \
             -resultBundlePath TestResults.xcresult \
-            2>&1 | tee test.log | grep -E "error:|Test Case|XCTAssert|\*\* TEST" || true
-          exit ${PIPESTATUS[0]}
+            2>&1 | tee test.log | grep -E "error:|Test Case|XCTAssert|\*\* TEST"
+          status=${PIPESTATUS[0]}
+          exit $status
 
       - name: Collect screenshots and logs
         if: always()

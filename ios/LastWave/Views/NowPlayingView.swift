@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 struct NowPlayingView: View {
     private enum Panel { case artwork, lyrics, queue }
@@ -10,24 +9,26 @@ struct NowPlayingView: View {
     @State private var scrubPosition: Double?
 
     var body: some View {
-        ZStack {
-            background
+        Group {
             if let track = player.current {
                 VStack(spacing: 20) {
-                    VStack(spacing: 0) {
+                    Group {
                         switch panel {
                         case .artwork:
-                            Spacer(minLength: 0)
-                            ArtworkView(url: track.artworkURL, size: artworkSize, cornerRadius: 14)
-                                .shadow(color: .black.opacity(0.5), radius: 24, y: 12)
-                            Spacer(minLength: 0)
+                            // Largest square that fits the space left above the controls.
+                            GeometryReader { geometry in
+                                let side = max(0, min(geometry.size.width, geometry.size.height, 420))
+                                ArtworkView(url: track.artworkURL, size: side, cornerRadius: 14)
+                                    .shadow(color: .black.opacity(0.5), radius: 24, y: 12)
+                                    .frame(width: geometry.size.width, height: geometry.size.height)
+                            }
                         case .lyrics:
                             LyricsPanel()
                         case .queue:
                             QueuePanel()
                         }
                     }
-                    .frame(maxHeight: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                     titleRow(track)
                     scrubber
@@ -41,10 +42,10 @@ struct NowPlayingView: View {
                 EmptyStateView(symbol: "music.note", title: "Nothing playing", message: "Pick a song to start listening.")
             }
         }
-    }
-
-    private var artworkSize: CGFloat {
-        min(UIScreen.main.bounds.width - 48, 420)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        // As a background (not a ZStack sibling) the oversized, scaled-to-fill
+        // blurred artwork can never widen the layout of the controls.
+        .background { background }
     }
 
     private var background: some View {
@@ -55,6 +56,8 @@ struct NowPlayingView: View {
             } placeholder: {
                 Color.clear
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .clipped()
             .blur(radius: 60)
             .opacity(0.45)
             LinearGradient(colors: [.clear, .black.opacity(0.7)], startPoint: .top, endPoint: .bottom)

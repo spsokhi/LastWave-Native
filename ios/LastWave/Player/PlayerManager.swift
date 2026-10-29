@@ -59,6 +59,10 @@ final class PlayerManager: ObservableObject {
     private var artworkTask: Task<Void, Never>?
     private var artwork: MPMediaItemArtwork?
     private var retriedCurrent = false
+    /// Songs that failed back to back; auto-skip stops at `maxConsecutiveFailures`
+    /// so a blocked network can't silently burn through the whole queue.
+    private var consecutiveFailures = 0
+    private static let maxConsecutiveFailures = 3
     private var resumePosition: Double?
     private var pendingAdvance = false
     private var isSeeking = false
@@ -82,6 +86,7 @@ final class PlayerManager: ObservableObject {
     func play(_ tracks: [Track], startAt index: Int = 0) {
         guard tracks.indices.contains(index) else { return }
         cancelRadio()
+        consecutiveFailures = 0
         queue = tracks
         load(index: index)
     }
@@ -89,6 +94,7 @@ final class PlayerManager: ObservableObject {
     /// Plays a song and fills the queue with YouTube Music's radio for it.
     func playRadio(from track: Track) {
         cancelRadio()
+        consecutiveFailures = 0
         queue = [track]
         load(index: 0)
         extendWithRadio(seed: track)
@@ -115,6 +121,7 @@ final class PlayerManager: ObservableObject {
     }
 
     func jump(to index: Int) {
+        consecutiveFailures = 0
         load(index: index)
     }
 
@@ -263,7 +270,12 @@ final class PlayerManager: ObservableObject {
         }
         isLoading = false
         isPlaying = false
+        consecutiveFailures += 1
         errorMessage = "Couldn't play “\(track.title)”: \(error.localizedDescription)"
+        if consecutiveFailures >= Self.maxConsecutiveFailures {
+            errorMessage = "\(consecutiveFailures) songs in a row failed: \(error.localizedDescription)"
+            return
+        }
         if index + 1 < queue.count {
             Task { [weak self] in
                 try? await Task.sleep(nanoseconds: 1_500_000_000)
@@ -376,6 +388,7 @@ final class PlayerManager: ObservableObject {
         case .playing:
             isPlaying = true
             isLoading = false
+            consecutiveFailures = 0
         case .waitingToPlayAtSpecifiedRate:
             isPlaying = true
         case .paused:
